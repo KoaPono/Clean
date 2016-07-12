@@ -1,0 +1,72 @@
+{
+    "author": "kelii@pridesix.com",
+    "dependencies": {},
+    "keywords": [],
+    "name": "clean",
+    "pebble": {
+        "capabilities": [
+            ""
+        ],
+        "displayName": "Clean",
+        "enableMultiJS": true,
+        "messageKeys": [
+            "TEMPERATURE",
+            "CONDITIONS"
+        ],
+        "projectType": "native",
+        "resources": {
+            "media": [
+                {
+                    "file": "images/Battery IMG",
+                    "name": "BATTERY_IMG",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Partly Cloudy IMG",
+                    "name": "PARTLY_CLOUDY_IMG",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "fonts/Bebas Font",
+                    "name": "BEBAS_FONT_25",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Bebas Font",
+                    "name": "BEBAS_FONT_42",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "trackingAdjust": 2,
+                    "type": "font"
+                },
+                {
+                    "file": "fonts/Bebas Font",
+                    "name": "BEBAS_FONT_80",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "font"
+                }
+            ]
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite"
+        ],
+        "uuid": "7a6a693d-0c61-49f7-99eb-d11332ac4863",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "1.0.0"
+}
