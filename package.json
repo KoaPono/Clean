@@ -1,21 +1,102 @@
 {
-    "author": "kelii@pridesix.com",
+    "author": "Kelii Deleon",
     "dependencies": {},
     "keywords": [],
     "name": "clean",
     "pebble": {
         "capabilities": [
-            ""
+            "location"
         ],
         "displayName": "Clean",
         "enableMultiJS": true,
         "messageKeys": [
             "TEMPERATURE",
-            "CONDITIONS"
+            "CONDITIONS",
+            "CONDITION_ID"
         ],
         "projectType": "native",
         "resources": {
             "media": [
+                {
+                    "file": "images/Extreme IMG",
+                    "name": "EXTREME_IMG",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Tornado IMG",
+                    "name": "TORNADO_IMG",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Lightning IMG",
+                    "name": "LIGHTNING_IMG",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Heavy Rain IMG",
+                    "name": "HEAVY_RAIN_IMG",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Night IMG",
+                    "name": "NIGHT_IMG",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Snow IMG",
+                    "name": "SNOW_IMG",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Rain IMG",
+                    "name": "RAIN_IMG",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Loading IMG",
+                    "name": "LOADING_IMG",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Cloudy IMG",
+                    "name": "CLOUDY_IMG",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/Clear IMG",
+                    "name": "CLEAR_IMG",
+                    "targetPlatforms": [
+                        "aplite"
+                    ],
+                    "type": "bitmap"
+                },
                 {
                     "file": "images/Battery IMG",
                     "name": "BATTERY_IMG",
@@ -63,7 +144,7 @@
         "targetPlatforms": [
             "aplite"
         ],
-        "uuid": "7a6a693d-0c61-49f7-99eb-d11332ac4863",
+        "uuid": "48c7f538-c3d8-4136-9b4b-e972c3d534bf",
         "watchapp": {
             "watchface": true
         }

@@ -29,22 +29,51 @@ static bool vibrateEveryHour;
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
 	// Store incoming information
 	static char temperature_buffer[8];
-	static char conditions_buffer[32];
+	//static char conditions_buffer[32];
+	static int condition_id;
 	static char weather_layer_buffer[32];
 	
 	// Read tuples for data
 	Tuple *temp_tuple = dict_find(iterator, MESSAGE_KEY_TEMPERATURE);
-	Tuple *conditions_tuple = dict_find(iterator, MESSAGE_KEY_CONDITIONS);
+	//Tuple *conditions_tuple = dict_find(iterator, MESSAGE_KEY_CONDITIONS);
+	Tuple *cond_id_tuple = dict_find(iterator, MESSAGE_KEY_CONDITION_ID);
 
 	// If all data is available, use it
-	if(temp_tuple || conditions_tuple) {
-  		snprintf(temperature_buffer, sizeof(temperature_buffer), "%d°F", (int)temp_tuple->value->int32);
-  		snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", conditions_tuple->value->cstring);
+	if(temp_tuple && cond_id_tuple) {
+  		snprintf(temperature_buffer,  sizeof(temperature_buffer), "%d°F", (int)temp_tuple->value->int32);
+		condition_id = (int)cond_id_tuple->value->int32;
+  		//snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", conditions_tuple->value->cstring);
 		
 		// Assemble full string and display
 		//snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s %s", temperature_buffer, conditions_buffer);
 		snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s", temperature_buffer);
 		text_layer_set_text(s_temp_layer, weather_layer_buffer);
+		
+		if (condition_id >= 200 && condition_id < 300){
+			s_wthr_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_LIGHTNING_IMG);
+		} else if (condition_id >= 300 && condition_id < 400) {
+			s_wthr_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_RAIN_IMG);
+		} else if (condition_id >= 500 && condition_id < 600) {
+			s_wthr_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_HEAVY_RAIN_IMG);
+		} else if (condition_id >= 600 && condition_id < 700) {
+			s_wthr_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_RAIN_IMG);
+		} else if (condition_id == 800) {
+			s_wthr_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_CLEAR_IMG);
+		} else if (condition_id == 801 || condition_id == 802) {
+			s_wthr_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_PARTLY_CLOUDY_IMG);
+		} else if (condition_id >= 803 && condition_id < 900) {
+			s_wthr_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_CLOUDY_IMG);
+		} else if ((condition_id >= 900 && condition_id < 903) || (condition_id >= 956 && condition_id < 970)){
+			s_wthr_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_TORNADO_IMG);
+		} else if (condition_id >= 903 && condition_id < 950) {
+			s_wthr_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_EXTREME_IMG);
+		} else if (condition_id >= 950 && condition_id < 956) {
+			s_wthr_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_CLEAR_IMG);
+		} else { 
+			s_wthr_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_LOADING_IMG);
+		}
+		
+		bitmap_layer_set_bitmap(s_wthr_icon_layer, s_wthr_icon_bitmap);
 	}
 }
 
@@ -133,7 +162,7 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed){
 	}
 	
 	// Get weather update every 30 minutes
-	if(tick_time->tm_min % 30 == 0) {
+	if(tick_time->tm_min % 15 == 0) {
 		//vibes_short_pulse();
 		
   		// Begin dictionary
@@ -157,14 +186,14 @@ static void main_window_load(Window *window) {
 	window_set_background_color(window, GColorBlack);
 	
 	// Create Layers
-	s_hour_layer = text_layer_create(GRect(-5 , 30, 75, 82));
+	s_hour_layer = text_layer_create(GRect(-5, 30, 75, 82));
 	s_min_layer  = text_layer_create(GRect(80, 42, 60, 44));
 	s_day_layer  = text_layer_create(GRect(0 , 10, 144, 30));
 	s_date_layer = text_layer_create(GRect(80, 85, 60, 30));
-	s_temp_layer = text_layer_create(GRect(5, 125, 50, 30));
+	s_temp_layer = text_layer_create(GRect(5 , 125, 50, 30));
 	
 	// Create GBitmap
-	s_wthr_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_PARTLY_CLOUDY_IMG);
+	s_wthr_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_LOADING_IMG);
 	s_btry_icon_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BATTERY_IMG);
 	// Create BitmapLayer to display the GBitmap
 	s_wthr_icon_layer = bitmap_layer_create(GRect(60, 127, 30, 30));
@@ -198,7 +227,7 @@ static void main_window_load(Window *window) {
 	text_layer_set_background_color(s_date_layer, GColorClear);
 	text_layer_set_text_color		 (s_date_layer, GColorWhite);
 	text_layer_set_font				 (s_date_layer, s_day_font);
-	text_layer_set_text				 (s_date_layer, "000 00");
+	text_layer_set_text				 (s_date_layer, "AUG 31");
 	text_layer_set_text_alignment  (s_date_layer, GTextAlignmentLeft);
 	
 	text_layer_set_background_color(s_temp_layer, GColorClear);
